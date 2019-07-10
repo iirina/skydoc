@@ -1,5 +1,8 @@
 workspace(name = "io_bazel_skydoc")
 
+load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 load(":setup.bzl", "skydoc_repositories")
 skydoc_repositories()
 
@@ -30,4 +33,27 @@ git_repository(
     name = "io_bazel",
     remote = "https://github.com/bazelbuild/bazel.git",
     commit = "ee0e62e239fee2853fec4b0deb794f3e464b6f93",  # Jul 02, 2019
+)
+
+maybe(
+    http_archive,
+    "rules_java",
+    sha256 = "bc81f1ba47ef5cc68ad32225c3d0e70b8c6f6077663835438da8d5733f917598",
+    urls = [
+      "https://mirror.bazel.build/github.com/bazelbuild/rules_java/archive/7cf3cefd652008d0a64a419c34c13bdca6c8f178.zip",
+      "https://github.com/bazelbuild/rules_java/archive/7cf3cefd652008d0a64a419c34c13bdca6c8f178.zip"
+    ],
+    strip_prefix = "rules_java-7cf3cefd652008d0a64a419c34c13bdca6c8f178"
+)
+
+# Needed only because of java_tools.
+maybe(
+    http_archive,
+    "rules_cc",
+    sha256 = "36fa66d4d49debd71d05fba55c1353b522e8caef4a20f8080a3d17cdda001d89",
+    urls = [
+      "https://mirror.bazel.build/github.com/bazelbuild/rules_cc/archive/0d5f3f2768c6ca2faca0079a997a97ce22997a0c.zip",
+      "https://github.com/bazelbuild/rules_cc/archive/0d5f3f2768c6ca2faca0079a997a97ce22997a0c.zip"
+    ],
+    strip_prefix = "rules_cc-0d5f3f2768c6ca2faca0079a997a97ce22997a0c",
 )
